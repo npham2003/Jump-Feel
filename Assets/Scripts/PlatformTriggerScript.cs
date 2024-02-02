@@ -21,12 +21,20 @@ public class PlatformTriggerScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("enter trigger");
-        character.SetAllowJump(true);
+        if (collision.gameObject.layer == 3)
+        {
+            print("enter trigger");
+            character.SetAllowJump(true);
+        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        character.SetAllowJump(false);
+        if (collision.gameObject.layer == 3)
+        {
+            print("enter trigger");
+            character.SetAllowJump(false);
+        }
     }
 }
