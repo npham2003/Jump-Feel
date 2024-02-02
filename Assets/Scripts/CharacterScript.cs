@@ -6,7 +6,6 @@ using UnityEngine;
 public class CharacterScript : MonoBehaviour
 {
     public Rigidbody2D myRigidbody;
-    public float baseMovementSpeed = 10f;
     public float xdirection;
     public float xspeed;
     public float maxSpeed;
