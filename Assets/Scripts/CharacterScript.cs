@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Build;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class CharacterScript : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class CharacterScript : MonoBehaviour
     public bool allowJump;
     public float yspeed;
     public float jumpForce;
+    public LayerMask groundLayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,8 +58,8 @@ public class CharacterScript : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        if (Input.GetKey(KeyCode.W) && allowJump)
+    {   
+        if (Input.GetKey(KeyCode.W) & allowJump)
         {
             myRigidbody.AddForce(new Vector2(myRigidbody.velocity.x, jumpForce));
         }
@@ -66,6 +69,30 @@ public class CharacterScript : MonoBehaviour
     public void SetAllowJump(bool allowJump)
     {
         this.allowJump = allowJump;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("platforms"))
+        {
+            if(transform.position.y > other.transform.position.y & myRigidbody.velocity.y < 0.1f)
+            {
+                SetAllowJump(true);
+            }
+            else
+            {
+                other.transform.parent.GetComponent<Collider2D>().enabled = false;
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("platforms"))
+        {
+            other.transform.parent.GetComponent<Collider2D>().enabled = true;
+            SetAllowJump(false);
+        }
     }
 
 

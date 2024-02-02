@@ -10,12 +10,9 @@ public class PlatformGenerator : MonoBehaviour
 {
     public GameObject platformPrefab;
     public int numberOfPlatforms = 5;
-    public float levelWidth = 3f;
-    public float minY = 5f;
-    public float maxY = 8f;
 
     public float verticalOffset = 20.0f; //Minimum distance between player and the highest platform
-    private float nextSpawnY = 0.0f;
+    private float nextSpawnY = -2f;
     public float horizontalLimit = 3f;
     public float platformSpacing = 10f; // vertical distance between different platform
 
@@ -29,6 +26,8 @@ public class PlatformGenerator : MonoBehaviour
     private Vector2 cameraBottomRight;
     // Start is called before the first frame update
     private List<GameObject> platforms = new List<GameObject>();
+    private float lastX = 0;
+    
 
     void Start()
     {  
@@ -93,9 +92,19 @@ public class PlatformGenerator : MonoBehaviour
     }
 
     void SpawnPlatform(float spawnY)
-    {
-        Vector3 spawnPosition = new Vector3(Random.Range(-cameraWidth/2, cameraWidth/2), spawnY, 0);
+    {   
+        float spawnX = Random.Range(lastX-horizontalLimit, lastX+horizontalLimit);
+        if(lastX-horizontalLimit < -cameraWidth/2)
+        {
+            spawnX = Random.Range(-cameraWidth/2, -cameraWidth/2 + 2*horizontalLimit);
+        }
+        else if(lastX+horizontalLimit > cameraWidth/2)
+        {
+            spawnX = Random.Range(cameraWidth/2-2*horizontalLimit, cameraWidth/2);
+        }
+        Vector3 spawnPosition = new Vector3(spawnX, spawnY, 0);
         platforms.Add(Instantiate(platformPrefab, spawnPosition, UnityEngine.Quaternion.identity));
+        lastX = spawnPosition.x;
     }
 
     bool IsObjectBelowCamera(Transform objTransform)

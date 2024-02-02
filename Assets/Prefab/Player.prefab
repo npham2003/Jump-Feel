@@ -172,7 +172,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 656266525994649617}
-  baseMovementSpeed: 10
   xdirection: 0
   xspeed: 0
   maxSpeed: 10
@@ -181,3 +180,6 @@ MonoBehaviour:
   allowJump: 0
   yspeed: 0
   jumpForce: 300
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
