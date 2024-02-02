@@ -4,6 +4,7 @@ using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
+using UnityEditor.SearchService;
 
 public class PlatformGenerator : MonoBehaviour
 {
@@ -13,10 +14,10 @@ public class PlatformGenerator : MonoBehaviour
     public float minY = 5f;
     public float maxY = 8f;
 
-    public float verticalOffset = 10.0f; //Minimum distance between player and the highest platform
+    public float verticalOffset = 20.0f; //Minimum distance between player and the highest platform
     private float nextSpawnY = 0.0f;
     public float horizontalLimit = 3f;
-    public float platformSpacing = 2f; // vertical distance between different platform
+    public float platformSpacing = 10f; // vertical distance between different platform
 
     //private Vector3 spawnPosition = new Vector3();
 
@@ -27,15 +28,15 @@ public class PlatformGenerator : MonoBehaviour
     private Vector2 cameraTopLeft;
     private Vector2 cameraBottomRight;
     // Start is called before the first frame update
+    private List<GameObject> platforms = new List<GameObject>();
+
     void Start()
     {  
         CalculateCameraBounds();
-        Vector3 spawnPosition = new Vector3();
         for (int i = 0; i < numberOfPlatforms; i++)
         {
-            spawnPosition.y += Random.Range(minY, maxY);
-            spawnPosition.x = Random.Range(-cameraWidth/2, cameraWidth/2);
-            Instantiate(platformPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+            SpawnPlatform(nextSpawnY);
+            nextSpawnY += platformSpacing;
         }
     }
 
@@ -45,16 +46,23 @@ public class PlatformGenerator : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            // 当玩家接近当前最高平台时，生成新平台
             while (player.transform.position.y + verticalOffset > nextSpawnY)
             {
                 SpawnPlatform(nextSpawnY);
                 nextSpawnY += platformSpacing;
             }
         }
+        for(int i = platforms.Count - 1; i >= 0; i--)
+        {
+            if(IsObjectBelowCamera(platforms[i].transform))
+            {
+                Destroy(platforms[i]);
+                platforms.RemoveAt(i);
+            }
+        }
     }
 
-        // Calculates the bounds of the camera view in world space.
+    // Calculates the bounds of the camera view in world space.
     // Useful for positioning objects within the camera's view.
      void CalculateCameraBounds()
     {
@@ -86,7 +94,13 @@ public class PlatformGenerator : MonoBehaviour
 
     void SpawnPlatform(float spawnY)
     {
-        Vector3 spawnPosition = new Vector3(Random.Range(-horizontalLimit, horizontalLimit), spawnY, 0);
-        Instantiate(platformPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+        Vector3 spawnPosition = new Vector3(Random.Range(-cameraWidth/2, cameraWidth/2), spawnY, 0);
+        platforms.Add(Instantiate(platformPrefab, spawnPosition, UnityEngine.Quaternion.identity));
+    }
+
+    bool IsObjectBelowCamera(Transform objTransform)
+    {
+        float cameraBottom = Camera.main.transform.position.y - Camera.main.orthographicSize;
+        return objTransform.position.y < cameraBottom;
     }
 }
