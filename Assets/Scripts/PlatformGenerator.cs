@@ -112,7 +112,7 @@ public class PlatformGenerator : MonoBehaviour
     bool IsObjectBelowCamera(Transform objTransform)
     {
         float cameraBottom = Camera.main.transform.position.y - Camera.main.orthographicSize;
-        return objTransform.position.y < cameraBottom;
+        return objTransform.position.y < cameraBottom - 10f;
     }
 
     public void scrollDown(float distance)
