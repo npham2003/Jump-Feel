@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public PlatformGenerator platformGenerator;
     public CharacterScript player;
+    public ShakeBehavior shakeBehavior;
     public Toggle[] toggles;
 
     public float moveSpeed;
@@ -46,9 +47,17 @@ public class GameManager : MonoBehaviour
     public void OnToggleValueChanged(Toggle changedToggle)
     {
 
-        if(changedToggle.name == "TrailToggle")
+        if (changedToggle.name == "TrailToggle")
         {
             player.GetComponent<MyTrailRenderer>().trailing = changedToggle.isOn;
+        }
+        if (changedToggle.name == "ScreenShakeToggle")
+        {
+            shakeBehavior.shakeOn = changedToggle.isOn;
+        }
+        if (changedToggle.name == "BlinkToggle")
+        {
+            player.blinkOn = changedToggle.isOn;
         }
     }
 

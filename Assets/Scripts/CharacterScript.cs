@@ -34,6 +34,7 @@ public class CharacterScript : MonoBehaviour
     public bool startState = true;
     public bool endState = true;
     public bool landed = false;
+    public bool blinkOn = false;
 
     public SpriteRenderer sprite;
 
@@ -145,18 +146,21 @@ public class CharacterScript : MonoBehaviour
 
     IEnumerator blink()
     {
-        
 
-        var whenAreWeDone = Time.time + blinkFor;
-        while (Time.time < whenAreWeDone)
+        if (blinkOn)
         {
-            sprite.color = Color.red;
-            yield return new WaitForSeconds(timeInvisible);
+            var whenAreWeDone = Time.time + blinkFor;
+            while (Time.time < whenAreWeDone)
+            {
+                sprite.color = Color.red;
+                yield return new WaitForSeconds(timeInvisible);
+                sprite.color = Color.black;
+                yield return new WaitForSeconds(timeVisible);
+
+            }
             sprite.color = Color.black;
-            yield return new WaitForSeconds(timeVisible);
-        
         }
-        sprite.color = Color.black;
+
         hitByMissle = false;
 
 
