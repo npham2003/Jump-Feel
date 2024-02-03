@@ -26,7 +26,7 @@ public class CharacterScript : MonoBehaviour
 
     public bool allowJump;
     public bool  haveTrail;
-
+    
     public bool hitByMissle = false;
     public float timeVisible = 0.3f;
     public float timeInvisible = 0.3f;
@@ -34,6 +34,10 @@ public class CharacterScript : MonoBehaviour
     public bool startState = true;
     public bool endState = true;
     public bool landed = false;
+
+    public GameObject particles;
+
+    public SpriteRenderer sprite;
 
     // Start is called before the first frame update
     void Start()
@@ -79,8 +83,8 @@ public class CharacterScript : MonoBehaviour
     {   
         // GetComponent<TrailRenderer>().emitting = !IsGrounded();
         if(!landed && IsGrounded() && myRigidbody.velocity.y<0){
-            jumpParticles.Play();
-            landed = true;
+            // jumpParticles.Play();
+            StartCoroutine(particle());
         }
         if (Input.GetKey(KeyCode.W) & IsGrounded())
         {
@@ -143,23 +147,30 @@ public class CharacterScript : MonoBehaviour
 
     IEnumerator blink()
     {
-        Renderer renderer = GetComponent<Renderer>();
+        
 
         var whenAreWeDone = Time.time + blinkFor;
         while (Time.time < whenAreWeDone)
         {
-            renderer.enabled = false;
+            sprite.color = Color.red;
             yield return new WaitForSeconds(timeInvisible);
-            renderer.enabled = true;
+            sprite.color = Color.black;
             yield return new WaitForSeconds(timeVisible);
         
         }
-        renderer.enabled = true;
+        sprite.color = Color.black;
         hitByMissle = false;
 
 
     }
 
-
+    IEnumerator particle(){
+        landed = true;
+        GameObject particle = Instantiate(particles,new Vector2(gameObject.transform.position.x,(gameObject.transform.position.y)-1f), UnityEngine.Quaternion.identity);
+        ParticleSystem system = particle.GetComponent<ParticleSystem>();
+        system.Play();
+        yield return new WaitForSeconds(2);
+        Destroy(particle);
+    }
 
 }
