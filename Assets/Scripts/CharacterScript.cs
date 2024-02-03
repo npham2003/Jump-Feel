@@ -27,6 +27,13 @@ public class CharacterScript : MonoBehaviour
     public bool allowJump;
     public bool  haveTrail;
 
+    public bool hitByMissle = false;
+    public float timeVisible = 0.3f;
+    public float timeInvisible = 0.3f;
+    public float blinkFor = 1.0f;
+    public bool startState = true;
+    public bool endState = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,7 +82,12 @@ public class CharacterScript : MonoBehaviour
             jumpParticles.Play();
             myRigidbody.AddForce(new Vector2(myRigidbody.velocity.x, jumpForce));
         }
-        
+
+        if (hitByMissle)
+        {
+            StartCoroutine(blink());
+        }
+
     }
 
 
@@ -121,6 +133,24 @@ public class CharacterScript : MonoBehaviour
         return myRigidbody.velocity.y <= 0 & (hitLeft.collider != null || hitRight.collider != null);
     }
 
+    IEnumerator blink()
+    {
+        Renderer renderer = GetComponent<Renderer>();
+
+        var whenAreWeDone = Time.time + blinkFor;
+        while (Time.time < whenAreWeDone)
+        {
+            renderer.enabled = false;
+            yield return new WaitForSeconds(timeInvisible);
+            renderer.enabled = true;
+            yield return new WaitForSeconds(timeVisible);
+        
+        }
+        renderer.enabled = true;
+        hitByMissle = false;
+
+
+    }
 
 
 
