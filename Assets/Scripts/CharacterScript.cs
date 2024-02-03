@@ -36,6 +36,8 @@ public class CharacterScript : MonoBehaviour
     public bool landed = false;
     public bool blinkOn = false;
 
+    public GameObject particles;
+
     public SpriteRenderer sprite;
 
     // Start is called before the first frame update
@@ -82,8 +84,8 @@ public class CharacterScript : MonoBehaviour
     {   
         // GetComponent<TrailRenderer>().emitting = !IsGrounded();
         if(!landed && IsGrounded() && myRigidbody.velocity.y<0){
-            jumpParticles.Play();
-            landed = true;
+            // jumpParticles.Play();
+            StartCoroutine(particle());
         }
         if (Input.GetKey(KeyCode.W) & IsGrounded())
         {
@@ -166,6 +168,13 @@ public class CharacterScript : MonoBehaviour
 
     }
 
-
+    IEnumerator particle(){
+        landed = true;
+        GameObject particle = Instantiate(particles,new Vector2(gameObject.transform.position.x,(gameObject.transform.position.y)-1f), UnityEngine.Quaternion.identity);
+        ParticleSystem system = particle.GetComponent<ParticleSystem>();
+        system.Play();
+        yield return new WaitForSeconds(2);
+        Destroy(particle);
+    }
 
 }
