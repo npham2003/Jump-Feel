@@ -9,6 +9,8 @@ using Vector2 = UnityEngine.Vector2;
 public class CharacterScript : MonoBehaviour
 {
     public Rigidbody2D myRigidbody;
+    public ParticleSystem jumpParticles;
+
     public float xdirection;
     public float xspeed;
     public float maxSpeed;
@@ -70,6 +72,7 @@ public class CharacterScript : MonoBehaviour
         GetComponent<TrailRenderer>().emitting = !IsGrounded();
         if (Input.GetKey(KeyCode.W) & IsGrounded())
         {
+            jumpParticles.Play();
             myRigidbody.AddForce(new Vector2(myRigidbody.velocity.x, jumpForce));
         }
         
@@ -115,7 +118,7 @@ public class CharacterScript : MonoBehaviour
         Debug.DrawLine(bottomLeft, bottomLeft+Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawLine(bottomRight, bottomRight+Vector2.down * groundCheckDistance, Color.red);
 
-        return myRigidbody.velocity.y < 0 & (hitLeft.collider != null || hitRight.collider != null);
+        return myRigidbody.velocity.y <= 0 & (hitLeft.collider != null || hitRight.collider != null);
     }
 
 
