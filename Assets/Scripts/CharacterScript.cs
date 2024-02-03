@@ -77,10 +77,9 @@ public class CharacterScript : MonoBehaviour
 
     private void FixedUpdate()
     {   
-        GetComponent<TrailRenderer>().emitting = !IsGrounded();
+        // GetComponent<TrailRenderer>().emitting = !IsGrounded();
         if(!landed && IsGrounded() && myRigidbody.velocity.y<0){
             jumpParticles.Play();
-            landed = true;
         }
         if (Input.GetKey(KeyCode.W) & IsGrounded())
         {
@@ -93,6 +92,7 @@ public class CharacterScript : MonoBehaviour
         {
             StartCoroutine(blink());
         }
+        
         
 
     }

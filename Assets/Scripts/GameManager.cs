@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
         if(changedToggle.name == "TrailToggle")
         {
-            player.GetComponent<TrailRenderer>().enabled = changedToggle.isOn;
+            player.GetComponent<MyTrailRenderer>().trailing = changedToggle.isOn;
         }
     }
 
