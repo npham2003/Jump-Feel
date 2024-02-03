@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using Vector2 = UnityEngine.Vector2;
 
 public class CharacterScript : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class CharacterScript : MonoBehaviour
     public float yspeed;
     public float jumpForce;
     public LayerMask groundLayer;
+    public float groundCheckDistance = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +62,7 @@ public class CharacterScript : MonoBehaviour
 
     private void FixedUpdate()
     {   
-        if (Input.GetKey(KeyCode.W) & allowJump)
+        if (Input.GetKey(KeyCode.W) & IsGrounded())
         {
             myRigidbody.AddForce(new Vector2(myRigidbody.velocity.x, jumpForce));
         }
@@ -94,6 +97,19 @@ public class CharacterScript : MonoBehaviour
             SetAllowJump(false);
         }
     }
+    private bool IsGrounded()
+    {   
+        Collider2D collider = GetComponent<Collider2D>();
+        Vector2 bottomLeft = new Vector2(collider.bounds.min.x,collider.bounds.min.y);
+        Vector2 bottomRight = new Vector2(collider.bounds.max.x, collider.bounds.min.y);
+        RaycastHit2D hitLeft = Physics2D.Raycast(bottomLeft, Vector2.down, groundCheckDistance, groundLayer);
+        RaycastHit2D hitRight = Physics2D.Raycast(bottomRight, Vector2.down, groundCheckDistance, groundLayer);
+        Debug.DrawLine(bottomLeft, bottomLeft+Vector2.down * groundCheckDistance, Color.red);
+        Debug.DrawLine(bottomRight, bottomRight+Vector2.down * groundCheckDistance, Color.red);
+
+        return myRigidbody.velocity.y == 0f & (hitLeft.collider != null || hitRight.collider != null);
+    }
+
 
 
 

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7747078114363183299}
   - component: {fileID: 5760744015445300393}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TriggerCollider
   m_TagString: platforms
   m_Icon: {fileID: 0}

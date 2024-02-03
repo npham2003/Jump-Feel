@@ -5,10 +5,12 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
 using UnityEditor.SearchService;
+using Unity.VisualScripting;
 
 public class PlatformGenerator : MonoBehaviour
 {
     public GameObject platformPrefab;
+    public GameObject initPlatform;
     public int numberOfPlatforms = 5;
 
     public float verticalOffset = 20.0f; //Minimum distance between player and the highest platform
@@ -31,6 +33,7 @@ public class PlatformGenerator : MonoBehaviour
 
     void Start()
     {  
+        platforms.Add(initPlatform);
         CalculateCameraBounds();
         for (int i = 0; i < numberOfPlatforms; i++)
         {
@@ -45,10 +48,9 @@ public class PlatformGenerator : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            while (player.transform.position.y + verticalOffset > nextSpawnY)
+            while (player.transform.position.y + verticalOffset > platforms[platforms.Count-5].transform.position.y)
             {
-                SpawnPlatform(nextSpawnY);
-                nextSpawnY += platformSpacing;
+                SpawnPlatform(platforms[platforms.Count-1].transform.position.y + platformSpacing);
             }
         }
         for(int i = platforms.Count - 1; i >= 0; i--)
@@ -111,5 +113,13 @@ public class PlatformGenerator : MonoBehaviour
     {
         float cameraBottom = Camera.main.transform.position.y - Camera.main.orthographicSize;
         return objTransform.position.y < cameraBottom;
+    }
+
+    public void scrollDown(float distance)
+    {
+        for(int i = platforms.Count - 1; i >= 0; i--)
+        {
+            platforms[i].transform.Translate(0, -distance,0);
+        }
     }
 }
