@@ -33,6 +33,7 @@ public class CharacterScript : MonoBehaviour
     public float blinkFor = 1.0f;
     public bool startState = true;
     public bool endState = true;
+    public bool landed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -76,17 +77,24 @@ public class CharacterScript : MonoBehaviour
 
     private void FixedUpdate()
     {   
-        GetComponent<TrailRenderer>().emitting = !IsGrounded();
+        // GetComponent<TrailRenderer>().emitting = !IsGrounded();
+        if(!landed && IsGrounded() && myRigidbody.velocity.y<0){
+            jumpParticles.Play();
+            landed = true;
+        }
         if (Input.GetKey(KeyCode.W) & IsGrounded())
         {
-            jumpParticles.Play();
+            
             myRigidbody.AddForce(new Vector2(myRigidbody.velocity.x, jumpForce));
+            landed = false;
         }
 
         if (hitByMissle)
         {
             StartCoroutine(blink());
         }
+        
+        
 
     }
 
@@ -129,7 +137,7 @@ public class CharacterScript : MonoBehaviour
         RaycastHit2D hitRight = Physics2D.Raycast(bottomRight, Vector2.down, groundCheckDistance, groundLayer);
         Debug.DrawLine(bottomLeft, bottomLeft+Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawLine(bottomRight, bottomRight+Vector2.down * groundCheckDistance, Color.red);
-
+        
         return myRigidbody.velocity.y <= 0 & (hitLeft.collider != null || hitRight.collider != null);
     }
 
