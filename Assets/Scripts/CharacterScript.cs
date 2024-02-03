@@ -26,7 +26,7 @@ public class CharacterScript : MonoBehaviour
 
     public bool allowJump;
     public bool  haveTrail;
-
+    
     public bool hitByMissle = false;
     public float timeVisible = 0.3f;
     public float timeInvisible = 0.3f;
@@ -34,6 +34,8 @@ public class CharacterScript : MonoBehaviour
     public bool startState = true;
     public bool endState = true;
     public bool landed = false;
+
+    public SpriteRenderer sprite;
 
     // Start is called before the first frame update
     void Start()
@@ -143,18 +145,18 @@ public class CharacterScript : MonoBehaviour
 
     IEnumerator blink()
     {
-        Renderer renderer = GetComponent<Renderer>();
+        
 
         var whenAreWeDone = Time.time + blinkFor;
         while (Time.time < whenAreWeDone)
         {
-            renderer.enabled = false;
+            sprite.color = Color.red;
             yield return new WaitForSeconds(timeInvisible);
-            renderer.enabled = true;
+            sprite.color = Color.black;
             yield return new WaitForSeconds(timeVisible);
         
         }
-        renderer.enabled = true;
+        sprite.color = Color.black;
         hitByMissle = false;
 
 

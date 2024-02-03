@@ -555,6 +555,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2923529917565521572, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2923529917565521572, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2923529917565521572, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3693294774259538109, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.097
@@ -595,6 +607,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8754707840450282459, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 2032906459}
+    - target: {fileID: 8754707840450282459, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
+      propertyPath: renderer
+      value: 
+      objectReference: {fileID: 2032906459}
     - target: {fileID: 8754707840450282459, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
       propertyPath: jumpForce
       value: 400
@@ -1225,6 +1245,11 @@ MonoBehaviour:
   scalePerSecond: {x: 1, y: 1, z: 1}
   colorPerSecond: {r: 255, g: 255, b: 255, a: 1}
   trailing: 0
+--- !u!212 &2032906459 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2923529917565521572, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
+  m_PrefabInstance: {fileID: 736879171}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9053823729069866930
 PrefabInstance:
   m_ObjectHideFlags: 0

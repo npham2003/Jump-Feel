@@ -50,6 +50,7 @@ public class MyTrailRenderer : MonoBehaviour
                     var cloneRend = clone.AddComponent<SpriteRenderer>();
                     cloneRend.sprite = sr.sprite;
                     cloneRend.sortingOrder = sr.sortingOrder - 1;
+                    cloneRend.color = Color.black;
                     clones.Add(cloneRend);
                 }
             }
