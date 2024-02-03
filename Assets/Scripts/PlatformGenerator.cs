@@ -119,7 +119,11 @@ public class PlatformGenerator : MonoBehaviour
     {
         for(int i = platforms.Count - 1; i >= 0; i--)
         {
-            platforms[i].transform.Translate(0, -distance,0);
+            PlatformMover mover = platforms[i].GetComponent<PlatformMover>();
+            if (mover != null)
+            {
+                mover.StartMoving();
+            }
         }
     }
 }

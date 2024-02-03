@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     {
         if(player.transform.position.y >= 1.5f)
         {   
-            player.transform.Translate(0,-2f,0);
+            //player.transform.Translate(0,-2f,0);
             platformGenerator.scrollDown(2f);
 
         }

@@ -18,7 +18,7 @@ public class CharacterScript : MonoBehaviour
     public float yspeed;
     public float jumpForce;
     public LayerMask groundLayer;
-    public float groundCheckDistance = 0.1f;
+    public float groundCheckDistance = 0.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +66,7 @@ public class CharacterScript : MonoBehaviour
         {
             myRigidbody.AddForce(new Vector2(myRigidbody.velocity.x, jumpForce));
         }
+        
     }
 
 
@@ -78,9 +79,10 @@ public class CharacterScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("platforms"))
         {
-            if(transform.position.y > other.transform.position.y & myRigidbody.velocity.y < 0.1f)
+            if(GetComponent<Collider2D>().bounds.min.y >= other.transform.position.y)
             {
                 SetAllowJump(true);
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, -1f);
             }
             else
             {
@@ -107,7 +109,7 @@ public class CharacterScript : MonoBehaviour
         Debug.DrawLine(bottomLeft, bottomLeft+Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawLine(bottomRight, bottomRight+Vector2.down * groundCheckDistance, Color.red);
 
-        return myRigidbody.velocity.y == 0f & (hitLeft.collider != null || hitRight.collider != null);
+        return myRigidbody.velocity.y < 0 & (hitLeft.collider != null || hitRight.collider != null);
     }
 
 
