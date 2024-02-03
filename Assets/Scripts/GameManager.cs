@@ -8,10 +8,17 @@ public class GameManager : MonoBehaviour
     public PlatformGenerator platformGenerator;
     public CharacterScript player;
 
+    public float moveSpeed;
+    public float gravity;
+    public float jumpForce;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        platformGenerator.platformSpeed = moveSpeed;
+        player.defaultDownSpeed = moveSpeed;
+        player.jumpForce = jumpForce;
+        player.gravity = gravity;
     }
 
     // Update is called once per frame

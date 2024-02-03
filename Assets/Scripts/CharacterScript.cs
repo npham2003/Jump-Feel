@@ -15,6 +15,8 @@ public class CharacterScript : MonoBehaviour
     public float accel;
     public float friction;
     public bool allowJump;
+    public float defaultDownSpeed;
+    public float gravity;
     public float yspeed;
     public float jumpForce;
     public LayerMask groundLayer;
@@ -23,7 +25,7 @@ public class CharacterScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        myRigidbody.gravityScale = gravity;
     }
 
     // Update is called once per frame

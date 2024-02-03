@@ -18,6 +18,8 @@ public class PlatformGenerator : MonoBehaviour
     public float horizontalLimit = 3f;
     public float platformSpacing = 10f; // vertical distance between different platform
 
+    public float platformSpeed;
+
     //private Vector3 spawnPosition = new Vector3();
 
     private float cameraHeight;
@@ -33,6 +35,7 @@ public class PlatformGenerator : MonoBehaviour
 
     void Start()
     {  
+        initPlatform.GetComponent<PlatformMover>().moveSpeed = platformSpeed;
         platforms.Add(initPlatform);
         CalculateCameraBounds();
         for (int i = 0; i < numberOfPlatforms; i++)
@@ -105,7 +108,9 @@ public class PlatformGenerator : MonoBehaviour
             spawnX = Random.Range(cameraWidth/2-2*horizontalLimit, cameraWidth/2);
         }
         Vector3 spawnPosition = new Vector3(spawnX, spawnY, 0);
-        platforms.Add(Instantiate(platformPrefab, spawnPosition, UnityEngine.Quaternion.identity));
+        GameObject newPlatform = Instantiate(platformPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+        newPlatform.GetComponent<PlatformMover>().moveSpeed = platformSpeed;
+        platforms.Add(newPlatform);
         lastX = spawnPosition.x;
     }
 

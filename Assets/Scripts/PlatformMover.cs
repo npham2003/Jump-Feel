@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlatformMover : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float moveDuration = 2f;
+    public float moveSpeed;
+    public float moveDuration;
 
     private Rigidbody2D rb;
     private float moveTimer;

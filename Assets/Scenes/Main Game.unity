@@ -154,6 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformGenerator: {fileID: 623047598}
   player: {fileID: 736879172}
+  moveSpeed: 1.5
+  gravity: 1
+  jumpForce: 400
 --- !u!4 &331276624
 Transform:
   m_ObjectHideFlags: 0
@@ -219,6 +222,7 @@ MonoBehaviour:
   verticalOffset: 20
   horizontalLimit: 3
   platformSpacing: 3
+  platformSpeed: 0
 --- !u!1001 &736879171
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,6 +231,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 656266525994649617, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
+      propertyPath: m_GravityScale
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 706225204046672058, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
       propertyPath: m_Name
       value: Player
@@ -270,6 +278,10 @@ PrefabInstance:
     - target: {fileID: 3693294774259538109, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754707840450282459, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
+      propertyPath: jumpForce
+      value: 400
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
