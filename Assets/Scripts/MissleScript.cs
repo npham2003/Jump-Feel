@@ -51,8 +51,9 @@ public class MissleScript : MonoBehaviour
         if (other.gameObject.CompareTag("MissleTrigger") && !characterScript.hitByMissle)
         {
             characterScript.hitByMissle = true;
-            Destroy(gameObject);
             shakeBehavior.triggerShake();
+            Destroy(gameObject);
+            
         }
     }
 }
