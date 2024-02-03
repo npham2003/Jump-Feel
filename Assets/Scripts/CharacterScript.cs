@@ -14,13 +14,16 @@ public class CharacterScript : MonoBehaviour
     public float maxSpeed;
     public float accel;
     public float friction;
-    public bool allowJump;
+
     public float defaultDownSpeed;
     public float gravity;
     public float yspeed;
     public float jumpForce;
     public LayerMask groundLayer;
     public float groundCheckDistance = 0.3f;
+
+    public bool allowJump;
+    public bool  haveTrail;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +67,7 @@ public class CharacterScript : MonoBehaviour
 
     private void FixedUpdate()
     {   
+        GetComponent<TrailRenderer>().emitting = !IsGrounded();
         if (Input.GetKey(KeyCode.W) & IsGrounded())
         {
             myRigidbody.AddForce(new Vector2(myRigidbody.velocity.x, jumpForce));

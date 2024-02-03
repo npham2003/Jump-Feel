@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public PlatformGenerator platformGenerator;
     public CharacterScript player;
+    public Toggle[] toggles;
 
     public float moveSpeed;
     public float gravity;
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour
         player.defaultDownSpeed = moveSpeed;
         player.jumpForce = jumpForce;
         player.gravity = gravity;
+        InitializeToggles();
     }
 
     // Update is called once per frame
@@ -31,4 +34,22 @@ public class GameManager : MonoBehaviour
 
         }
     }
+
+    void InitializeToggles()
+    {
+        foreach(Toggle toggle in toggles)
+        {
+            toggle.onValueChanged.AddListener(delegate {OnToggleValueChanged(toggle);});
+        }
+    }
+
+    public void OnToggleValueChanged(Toggle changedToggle)
+    {
+
+        if(changedToggle.name == "TrailToggle")
+        {
+            player.GetComponent<TrailRenderer>().enabled = changedToggle.isOn;
+        }
+    }
+
 }
