@@ -80,6 +80,7 @@ public class CharacterScript : MonoBehaviour
         // GetComponent<TrailRenderer>().emitting = !IsGrounded();
         if(!landed && IsGrounded() && myRigidbody.velocity.y<0){
             jumpParticles.Play();
+            landed = true;
         }
         if (Input.GetKey(KeyCode.W) & IsGrounded())
         {
