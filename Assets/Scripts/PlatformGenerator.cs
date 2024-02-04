@@ -28,16 +28,38 @@ public class PlatformGenerator : MonoBehaviour
     private Vector2 cameraTopRight;
     private Vector2 cameraTopLeft;
     private Vector2 cameraBottomRight;
+
+    private UtilityScript utilityScript;
+
     // Start is called before the first frame update
     private List<GameObject> platforms = new List<GameObject>();
     private float lastX = 0;
-    
+
+    private void Awake()
+    {
+
+    }
 
     void Start()
-    {  
+    {
+
+        if (utilityScript == null)
+        {
+            utilityScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UtilityScript>();
+            if (utilityScript == null)
+            {
+                Debug.LogWarning("script still null");
+            }
+        }
+        cameraHeight = utilityScript.CameraHeight;
+        cameraWidth = utilityScript.CameraWidth;
+        cameraBottomLeft = utilityScript.CameraBottomLeft;
+        cameraBottomRight = utilityScript.CameraBottomRight;
+        cameraTopLeft = utilityScript.CameraTopLeft;
+        cameraTopRight = utilityScript.CameraTopRight;
+
         initPlatform.GetComponent<PlatformMover>().moveSpeed = platformSpeed;
         platforms.Add(initPlatform);
-        CalculateCameraBounds();
         for (int i = 0; i < numberOfPlatforms; i++)
         {
             SpawnPlatform(nextSpawnY);
@@ -58,7 +80,7 @@ public class PlatformGenerator : MonoBehaviour
         }
         for(int i = platforms.Count - 1; i >= 0; i--)
         {
-            if(IsObjectBelowCamera(platforms[i].transform))
+            if(utilityScript.IsObjectBelowCamera(platforms[i].transform))
             {
                 Destroy(platforms[i]);
                 platforms.RemoveAt(i);
@@ -66,35 +88,7 @@ public class PlatformGenerator : MonoBehaviour
         }
     }
 
-    // Calculates the bounds of the camera view in world space.
-    // Useful for positioning objects within the camera's view.
-     void CalculateCameraBounds()
-    {
-        Camera cam = Camera.main;
-        if (cam == null) 
-        {
-            Debug.LogError("Main Camera is not assigned.");
-            return;
-        }
-        
-        if (cam.orthographic)
-        {
-            cameraHeight = cam.orthographicSize * 2;
-            cameraWidth = cameraHeight * cam.aspect; 
 
-            cameraBottomLeft = new Vector2(cam.transform.position.x - cameraWidth / 2, cam.transform.position.y - cam.orthographicSize);
-            cameraTopRight = new Vector2(cam.transform.position.x + cameraWidth / 2, cam.transform.position.y + cam.orthographicSize);
-
-            cameraTopLeft = new Vector2(cameraBottomLeft.x, cameraTopRight.y);
-            cameraBottomRight = new Vector2(cameraTopRight.x, cameraBottomLeft.y);
-            
-            Debug.Log($"Camera Bounds:\nTop Left: {cameraTopLeft}\nTop Right: {cameraTopRight}\nBottom Left: {cameraBottomLeft}\nBottom Right: {cameraBottomRight}");
-        }
-        else
-        {
-            Debug.LogError("Camera is not orthographic.");
-        }
-    }
 
     void SpawnPlatform(float spawnY)
     {   
@@ -114,11 +108,6 @@ public class PlatformGenerator : MonoBehaviour
         lastX = spawnPosition.x;
     }
 
-    bool IsObjectBelowCamera(Transform objTransform)
-    {
-        float cameraBottom = Camera.main.transform.position.y - Camera.main.orthographicSize;
-        return objTransform.position.y < cameraBottom - 10f;
-    }
 
     public void scrollDown(float distance)
     {

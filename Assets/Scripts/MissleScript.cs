@@ -10,8 +10,18 @@ public class MissleScript : MonoBehaviour
     public GameObject mainCamera;
     public ShakeBehavior shakeBehavior;
 
+    private UtilityScript utilityScript;
+
     void Start()
     {
+        if (utilityScript == null)
+        {
+            utilityScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UtilityScript>();
+            if (utilityScript == null)
+            {
+                Debug.LogWarning("script still null");
+            }
+        }
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -39,7 +49,7 @@ public class MissleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.y < deadZone)
+        if(utilityScript.IsObjectBelowCamera(transform))
         {
             Destroy(gameObject);
         }
