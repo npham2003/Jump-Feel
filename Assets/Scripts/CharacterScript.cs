@@ -140,7 +140,7 @@ public class CharacterScript : MonoBehaviour
             SetAllowJump(false);
         }
     }
-    private bool IsGrounded()
+    public bool IsGrounded()
     {   
         Collider2D collider = GetComponent<Collider2D>();
         Vector2 bottomLeft = new Vector2(collider.bounds.min.x,collider.bounds.min.y);

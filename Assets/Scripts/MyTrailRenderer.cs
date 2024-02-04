@@ -12,6 +12,7 @@ public class MyTrailRenderer : MonoBehaviour
     public Vector3 scalePerSecond = new Vector3(1f, 1f, 1f);
     public Color colorPerSecond = new Color(0, 0, 0, 1f);
     
+    public CharacterScript characterScript;
     public bool trailing;
     void Start()
     {
@@ -19,13 +20,17 @@ public class MyTrailRenderer : MonoBehaviour
         tf = GetComponent<Transform>();
         sr = GetComponent<SpriteRenderer>();
         clones = new List<SpriteRenderer>();
+        characterScript = GetComponent<CharacterScript>();
+        colorPerSecond = new Color(sr.color.r,sr.color.g,sr.color.b,colorPerSecond.a);
         StartCoroutine(trail());
+
     }
  
     void Update()
     {
         for (int i = 0; i < clones.Count; i++)
         {
+            
             clones[i].color -= colorPerSecond * Time.deltaTime;
             clones[i].transform.localScale -= scalePerSecond * Time.deltaTime;
             if (clones[i].color.a <= 0f || clones[i].transform.localScale == Vector3.zero)
@@ -35,13 +40,14 @@ public class MyTrailRenderer : MonoBehaviour
                 i--;
             }
         }
+        
     }
  
     IEnumerator trail()
     {
         for (; ; ) //while(true)
         {
-            if(trailing){
+            if(trailing && !(characterScript.IsGrounded()&&characterScript.xdirection==0)){
                 if (rb.velocity != Vector2.zero)
                 {
                     var clone = new GameObject("trailClone");
