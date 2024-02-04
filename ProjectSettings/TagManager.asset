@@ -6,6 +6,7 @@ TagManager:
   tags:
   - platforms
   - MissleTrigger
+  - GameManager
   layers:
   - Default
   - TransparentFX
