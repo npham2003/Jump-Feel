@@ -4,6 +4,7 @@ using System.Numerics;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Vector2 = UnityEngine.Vector2;
 
@@ -46,9 +47,24 @@ public class CharacterScript : MonoBehaviour
 
     private Color startedColor;
 
+    private UtilityScript utilityScript;
+    private float cameraHeight;
+    private float cameraWidth;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (utilityScript == null)
+        {
+            utilityScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UtilityScript>();
+            if (utilityScript == null)
+            {
+                Debug.LogWarning("script still null");
+            }
+        }
+        cameraHeight = utilityScript.CameraHeight;
+        cameraWidth = utilityScript.CameraWidth;
+
         myRigidbody.gravityScale = gravity;
         startedColor = sprite.color;
     }
@@ -56,6 +72,10 @@ public class CharacterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(transform.position.y < -cameraHeight / 2)
+        {
+            endGame();
+        }
 
         if (Input.GetKey(KeyCode.A)) {
             xdirection = -1;
@@ -105,9 +125,12 @@ public class CharacterScript : MonoBehaviour
         {
             StartCoroutine(blink());
         }
-        
-        
+    }
 
+    // reset position for testing, will create gameove scences
+    private void endGame()
+    {
+        transform.position = new Vector2(0,cameraHeight/2 - 2f);
     }
 
 
