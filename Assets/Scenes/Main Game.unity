@@ -630,6 +630,7 @@ MonoBehaviour:
   shakeBehavior: {fileID: 1703693207}
   background1: {fileID: 1337903129}
   background2: {fileID: 921505303}
+  missileSpawner: {fileID: 861940591}
   toggles:
   - {fileID: 634690692}
   - {fileID: 680967842}
@@ -1588,6 +1589,7 @@ MonoBehaviour:
   spawnRate: 2
   moveSpeed: 0
   rate: 2
+  missiles: 0
 --- !u!4 &861940593
 Transform:
   m_ObjectHideFlags: 0

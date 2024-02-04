@@ -19,6 +19,8 @@ public class CharacterScript : MonoBehaviour
     public float xdirection;
     public float xspeed;
     public float maxSpeed;
+
+
     public float accel;
     public float friction;
 
@@ -40,6 +42,7 @@ public class CharacterScript : MonoBehaviour
     public bool endState = true;
     public bool landed = false;
     public bool blinkOn = false;
+
 
     public GameObject particles;
 
@@ -77,12 +80,13 @@ public class CharacterScript : MonoBehaviour
             endGame();
         }
 
-        if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
             xdirection = -1;
         }
-        else if (Input.GetKey(KeyCode.D)) {
+        else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)) {
             xdirection = 1;
-        }else
+        }
+        else
         {
             xdirection = 0;
         }
@@ -112,7 +116,7 @@ public class CharacterScript : MonoBehaviour
         // GetComponent<TrailRenderer>().emitting = !IsGrounded();
         if(!landed && IsGrounded() && myRigidbody.velocity.y<0 && dustOn){
             // jumpParticles.Play();
-            StartCoroutine(particle());
+            StartCoroutine(Particle());
         }
         if (Input.GetKey(KeyCode.W) & IsGrounded())
         {
@@ -123,7 +127,8 @@ public class CharacterScript : MonoBehaviour
 
         if (hitByMissle)
         {
-            StartCoroutine(blink());
+            StartCoroutine(Blink());
+            xspeed = 0;
         }
     }
 
@@ -176,7 +181,7 @@ public class CharacterScript : MonoBehaviour
         return myRigidbody.velocity.y <= 0 & (hitLeft.collider != null || hitRight.collider != null);
     }
 
-    IEnumerator blink()
+    IEnumerator Blink()
     {
         
         if (blinkOn)
@@ -198,13 +203,24 @@ public class CharacterScript : MonoBehaviour
 
     }
 
-    IEnumerator particle(){
+    IEnumerator Particle(){
         landed = true;
         GameObject particle = Instantiate(particles,new Vector2(gameObject.transform.position.x,(gameObject.transform.position.y)-1f), UnityEngine.Quaternion.identity);
         ParticleSystem system = particle.GetComponent<ParticleSystem>();
         system.Play();
         yield return new WaitForSeconds(2);
         Destroy(particle);
+    }
+
+    public void ChangeSpeed(bool fast){
+        
+        if(fast){
+            maxSpeed *= 1.5f;
+            accel *= 1.5f;
+        }else{
+            maxSpeed /= 1.5f;
+            accel /= 1.5f;
+        }
     }
 
 }

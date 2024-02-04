@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject background1;
     public GameObject background2;
-
+    public GameObject missileSpawner;
 
 
     public Toggle[] toggles;
@@ -88,10 +88,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Toggle Trail");
             player.GetComponent<MyTrailRenderer>().trailing = changedToggle.isOn;
+            player.GetComponent<CharacterScript>().ChangeSpeed(changedToggle.isOn);
         }
         if (changedToggle.name == "ScreenShakeToggle")
         {
             shakeBehavior.shakeOn = changedToggle.isOn;
+            missileSpawner.GetComponent<MissleSpawnScript>().missiles = changedToggle.isOn;
         }
         if (changedToggle.name == "BlinkToggle")
         {
