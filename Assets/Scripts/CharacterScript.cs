@@ -4,12 +4,16 @@ using System.Numerics;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.UI;
 using Vector2 = UnityEngine.Vector2;
 
 public class CharacterScript : MonoBehaviour
 {
     public Rigidbody2D myRigidbody;
     public ParticleSystem jumpParticles;
+
+
+    public bool dustOn;
 
     public float xdirection;
     public float xspeed;
@@ -34,15 +38,19 @@ public class CharacterScript : MonoBehaviour
     public bool startState = true;
     public bool endState = true;
     public bool landed = false;
+    public bool blinkOn = false;
 
     public GameObject particles;
 
     public SpriteRenderer sprite;
 
+    private Color startedColor;
+
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody.gravityScale = gravity;
+        startedColor = sprite.color;
     }
 
     // Update is called once per frame
@@ -82,7 +90,7 @@ public class CharacterScript : MonoBehaviour
     private void FixedUpdate()
     {   
         // GetComponent<TrailRenderer>().emitting = !IsGrounded();
-        if(!landed && IsGrounded() && myRigidbody.velocity.y<0){
+        if(!landed && IsGrounded() && myRigidbody.velocity.y<0 && dustOn){
             // jumpParticles.Play();
             StartCoroutine(particle());
         }
@@ -148,17 +156,20 @@ public class CharacterScript : MonoBehaviour
     IEnumerator blink()
     {
         
-
-        var whenAreWeDone = Time.time + blinkFor;
-        while (Time.time < whenAreWeDone)
+        if (blinkOn)
         {
-            sprite.color = Color.red;
-            yield return new WaitForSeconds(timeInvisible);
-            sprite.color = Color.black;
-            yield return new WaitForSeconds(timeVisible);
-        
+            var whenAreWeDone = Time.time + blinkFor;
+            while (Time.time < whenAreWeDone)
+            {
+                sprite.color = Color.red;
+                yield return new WaitForSeconds(timeInvisible);
+                sprite.color = Color.black;
+                yield return new WaitForSeconds(timeVisible);
+
+            }
+            sprite.color = startedColor;
         }
-        sprite.color = Color.black;
+
         hitByMissle = false;
 
 
