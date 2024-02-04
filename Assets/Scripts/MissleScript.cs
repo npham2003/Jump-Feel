@@ -14,7 +14,7 @@ public class MissleScript : MonoBehaviour
     {
         if (player == null)
         {
-            player = GameObject.FindGameObjectsWithTag("Player")[0];
+            player = GameObject.FindGameObjectWithTag("Player");
             if(player == null)
             {
                 Debug.Log("Player not found");
@@ -26,7 +26,7 @@ public class MissleScript : MonoBehaviour
         }
         if (mainCamera == null)
         {
-            mainCamera = GameObject.FindGameObjectsWithTag("MainCamera")[0];
+            mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             if(mainCamera == null)
             {
                 Debug.Log("Camera not found");

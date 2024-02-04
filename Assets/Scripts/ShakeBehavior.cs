@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShakeBehavior : MonoBehaviour
 {
+
+    public bool shakeOn;
 
     // Desired duration of the shake effect
     private float shakeDuration = 0f;
@@ -47,12 +50,11 @@ public class ShakeBehavior : MonoBehaviour
 
     public void triggerShake()
     {
-        shakeDuration = 0.5f;
-    }
-
-    public void disableShake()
-    {
-        shakeDuration = 0f;
+        if(shakeOn)
+        {
+            shakeDuration = 0.5f;
+        }
+       
     }
 
 }

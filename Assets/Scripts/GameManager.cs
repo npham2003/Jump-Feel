@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public PlatformGenerator platformGenerator;
     public CharacterScript player;
+
+    public ShakeBehavior shakeBehavior;
+
     public GameObject background1;
     public GameObject background2;
+
 
 
     public Toggle[] toggles;
@@ -64,16 +69,50 @@ public class GameManager : MonoBehaviour
         {
             toggle.onValueChanged.AddListener(delegate {OnToggleValueChanged(toggle);});
         }
+        
     }
 
     public void OnToggleValueChanged(Toggle changedToggle)
     {
-
-        if(changedToggle.name == "TrailToggle")
+        if(changedToggle.name == "SelectAllToggle")
         {
+            setAllEffects(changedToggle.isOn);
+        }
+
+        if(changedToggle.name == "DeSelectAllToggle")
+        {
+            setAllEffects(false);
+        }
+
+        if (changedToggle.name == "TrailToggle")
+        {
+            Debug.Log("Toggle Trail");
             player.GetComponent<MyTrailRenderer>().trailing = changedToggle.isOn;
         }
+        if (changedToggle.name == "ScreenShakeToggle")
+        {
+            shakeBehavior.shakeOn = changedToggle.isOn;
+        }
+        if (changedToggle.name == "BlinkToggle")
+        {
+            player.blinkOn = changedToggle.isOn;
+        }
+        if(changedToggle.name == "DustToggle")
+        {
+            player.dustOn = changedToggle.isOn;
+        }
     }
+
+    private void setAllEffects(bool isEffectOn)
+    {
+        foreach (Toggle toggle in toggles)
+        {
+            if (toggle.name == "DeSelectAllToggle" && isEffectOn) continue;
+            toggle.isOn = isEffectOn;
+
+        }
+    }
+         
 
     void ResetBackground()
     {

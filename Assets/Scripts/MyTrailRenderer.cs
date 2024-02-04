@@ -12,7 +12,7 @@ public class MyTrailRenderer : MonoBehaviour
     public Vector3 scalePerSecond = new Vector3(1f, 1f, 1f);
     public Color colorPerSecond = new Color(255, 255, 255, 1f);
 
-    public bool trailing = false;
+    public bool trailing;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -50,7 +50,7 @@ public class MyTrailRenderer : MonoBehaviour
                     var cloneRend = clone.AddComponent<SpriteRenderer>();
                     cloneRend.sprite = sr.sprite;
                     cloneRend.sortingOrder = sr.sortingOrder - 1;
-                    cloneRend.color = Color.black;
+                    cloneRend.color = sr.color;
                     clones.Add(cloneRend);
                 }
             }
