@@ -605,9 +605,10 @@ GameObject:
   m_Component:
   - component: {fileID: 331276624}
   - component: {fileID: 331276623}
+  - component: {fileID: 331276625}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -654,6 +655,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &331276625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331276622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd7a7ce8a4026c4595a6a077e0429e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &467146778
 GameObject:
   m_ObjectHideFlags: 0
@@ -3002,6 +3015,7 @@ MonoBehaviour:
   ClonesPerSecond: 10
   scalePerSecond: {x: 1, y: 1, z: 1}
   colorPerSecond: {r: 255, g: 255, b: 255, a: 1}
+  characterScript: {fileID: 0}
   trailing: 0
 --- !u!212 &2032906459 stripped
 SpriteRenderer:
