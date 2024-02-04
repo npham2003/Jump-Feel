@@ -102,6 +102,13 @@ public class GameManager : MonoBehaviour
         if(changedToggle.name == "DustToggle")
         {
             player.dustOn = changedToggle.isOn;
+            if(changedToggle.isOn){
+                player.GetComponent<CharacterScript>().jumpForce=800;
+                player.GetComponent<Rigidbody2D>().gravityScale=4;
+            }else{
+                player.GetComponent<CharacterScript>().jumpForce=200;
+                player.GetComponent<Rigidbody2D>().gravityScale=1;
+            }
         }
     }
 

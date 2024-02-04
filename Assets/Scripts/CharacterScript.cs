@@ -75,6 +75,7 @@ public class CharacterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if(transform.position.y < -cameraHeight / 2)
         {
             endGame();
@@ -108,6 +109,9 @@ public class CharacterScript : MonoBehaviour
         }
 
         myRigidbody.velocity = new Vector2(xspeed, myRigidbody.velocity.y);
+        if(myRigidbody.velocity.y<-16){
+            myRigidbody.velocity = new Vector2(xspeed, -16);
+        }
 
     }
 
@@ -151,7 +155,7 @@ public class CharacterScript : MonoBehaviour
             if(GetComponent<Collider2D>().bounds.min.y >= other.transform.position.y)
             {
                 SetAllowJump(true);
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, -1f);
+                // myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, -1f);
             }
             else
             {
