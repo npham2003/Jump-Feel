@@ -10,8 +10,8 @@ public class MyTrailRenderer : MonoBehaviour
     private Transform tf;
     private List<SpriteRenderer> clones;
     public Vector3 scalePerSecond = new Vector3(1f, 1f, 1f);
-    public Color colorPerSecond = new Color(255, 255, 255, 1f);
-
+    public Color colorPerSecond = new Color(0, 0, 0, 1f);
+    
     public bool trailing;
     void Start()
     {
@@ -45,11 +45,12 @@ public class MyTrailRenderer : MonoBehaviour
                 if (rb.velocity != Vector2.zero)
                 {
                     var clone = new GameObject("trailClone");
+                    clone.layer = LayerMask.NameToLayer("UI");
                     clone.transform.position = tf.position;
                     clone.transform.localScale = tf.localScale;
                     var cloneRend = clone.AddComponent<SpriteRenderer>();
                     cloneRend.sprite = sr.sprite;
-                    cloneRend.sortingOrder = sr.sortingOrder - 1;
+                    cloneRend.sortingOrder = sr.sortingOrder;
                     cloneRend.color = sr.color;
                     clones.Add(cloneRend);
                 }
