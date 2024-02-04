@@ -5,19 +5,33 @@ using UnityEngine;
 public class MissleSpawnScript : MonoBehaviour
 {
     public GameObject missle;
-    private float cameraHeight;
-    private float cameraWidth;
-    private float timer = 0;
+
     public float spawnRate = 2; // use random spawn rate later
 
     public float moveSpeed;
     public float rate = 4f;
 
+    private float cameraHeight;
+    private float cameraWidth;
+    private float timer = 0;
+
+    private UtilityScript utilityScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        CalculateCameraHeightandWidth();
-        
+
+        if (utilityScript == null)
+        {
+            utilityScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UtilityScript>();
+            if (utilityScript == null)
+            {
+                Debug.LogWarning("script still null");
+            }
+        }
+        cameraHeight = utilityScript.CameraHeight;
+        cameraWidth = utilityScript.CameraWidth;
+
     }
 
     // Update is called once per frame
@@ -53,25 +67,5 @@ public class MissleSpawnScript : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         rb.simulated = true;
-    }
-
-    void CalculateCameraHeightandWidth()
-    {
-        Camera cam = Camera.main;
-        if (cam == null)
-        {
-            Debug.LogError("Main Camera is not assigned.");
-            return;
-        }
-
-        if (cam.orthographic)
-        {
-            cameraHeight = cam.orthographicSize * 2;
-            cameraWidth = cameraHeight * cam.aspect;
-        }
-        else
-        {
-            Debug.LogError("Camera is not orthographic.");
-        }
     }
 }
