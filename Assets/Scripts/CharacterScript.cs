@@ -15,6 +15,7 @@ public class CharacterScript : MonoBehaviour
 
 
     public bool dustOn;
+    public bool soundsOn;
 
     public float xdirection;
     public float xspeed;
@@ -47,6 +48,9 @@ public class CharacterScript : MonoBehaviour
     public GameObject particles;
 
     public SpriteRenderer sprite;
+
+    public AudioSource jumpAudioSource;
+    public AudioSource landingAudioSource;
 
     private Color startedColor;
 
@@ -120,11 +124,12 @@ public class CharacterScript : MonoBehaviour
         // GetComponent<TrailRenderer>().emitting = !IsGrounded();
         if(!landed && IsGrounded() && myRigidbody.velocity.y<0 && dustOn){
             // jumpParticles.Play();
+            if(soundsOn) landingAudioSource.Play();
             StartCoroutine(Particle());
         }
         if (Input.GetKey(KeyCode.W) & IsGrounded())
         {
-            
+            if (soundsOn) jumpAudioSource.Play();
             myRigidbody.AddForce(new Vector2(myRigidbody.velocity.x, jumpForce));
             landed = false;
         }
