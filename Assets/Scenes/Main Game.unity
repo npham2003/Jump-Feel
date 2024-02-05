@@ -844,6 +844,8 @@ MonoBehaviour:
   background1: {fileID: 1337903129}
   background2: {fileID: 921505303}
   missileSpawner: {fileID: 861940591}
+  heartPrefab: {fileID: 6781341538351203979, guid: 2de4e95dcce6a9b4db7a022b73a81664, type: 3}
+  canvas: {fileID: 1988815681}
   toggles:
   - {fileID: 634690692}
   - {fileID: 680967842}

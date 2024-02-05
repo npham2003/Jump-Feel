@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public GameObject background1;
     public GameObject background2;
     public GameObject missileSpawner;
+    public GameObject heartPrefab;
+    public Canvas canvas;
 
 
     public Toggle[] toggles;
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
     public float jumpForce;
     public TMP_Text scoreText;
     public int score=0;
+    public int playerHealth = 3;
 
     public float scoreMultiplier = 1;
     private float backgroundHeight;
@@ -33,6 +36,8 @@ public class GameManager : MonoBehaviour
 
     public float gameSpeedIncrese = 0.001f;
     public bool speedIncreaseOn = false;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +51,7 @@ public class GameManager : MonoBehaviour
         backgroundHeight = background1.GetComponent<SpriteRenderer>().bounds.size.y;
         ResetBackground();
         StartCoroutine(Score());
+        UpdateHealthUI();
     }
 
     // Update is called once per frame
@@ -169,6 +175,35 @@ public class GameManager : MonoBehaviour
                 score+=((int)(100*scoreMultiplier));
                 scoreText.text="Score: "+score;
             }
+        }
+    }
+
+    public void UpdateHealthUI()
+    {
+        foreach (Transform child in canvas.transform)
+        {
+            if (child.gameObject.CompareTag("HeartUI"))
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        for (int i = 0; i < playerHealth; i++)
+        {
+            GameObject heart = Instantiate(heartPrefab, canvas.transform);
+            heart.tag = "HeartUI";
+
+            RectTransform rect = heart.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector2(330 - (rect.sizeDelta.x /2 * i), 200);
+        }
+    }
+
+    public void playerHit()
+    {
+        playerHealth--;
+        UpdateHealthUI();
+        if(playerHealth <= 0)
+        {
+            //enter the end scene
         }
     }
 

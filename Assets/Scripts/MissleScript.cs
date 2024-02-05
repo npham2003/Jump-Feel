@@ -61,6 +61,7 @@ public class MissleScript : MonoBehaviour
         if (other.gameObject.CompareTag("MissleTrigger") && !characterScript.hitByMissle)
         {
             characterScript.hitByMissle = true;
+            GameObject.Find("GameManager").GetComponent<GameManager>().playerHealth--;
             shakeBehavior.triggerShake();
             Destroy(gameObject);
             
