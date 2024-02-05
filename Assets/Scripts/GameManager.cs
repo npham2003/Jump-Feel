@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         backgroundHeight = background1.GetComponent<SpriteRenderer>().bounds.size.y;
         ResetBackground();
         StartCoroutine(Score());
-        UpdateHealthUI();
+        //UpdateHealthUI();
     }
 
     // Update is called once per frame
@@ -120,8 +120,10 @@ public class GameManager : MonoBehaviour
             shakeBehavior.shakeOn = changedToggle.isOn;
             missileSpawner.GetComponent<MissleSpawnScript>().missiles = changedToggle.isOn;         
             if(changedToggle.isOn){
+                UpdateHealthUI();
                 scoreMultiplier+=0.4f;
             }else{
+                DeleteHealthUI();
                 scoreMultiplier-=0.4f;
             }
         }
@@ -180,13 +182,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateHealthUI()
     {
-        foreach (Transform child in canvas.transform)
-        {
-            if (child.gameObject.CompareTag("HeartUI"))
-            {
-                Destroy(child.gameObject);
-            }
-        }
+        DeleteHealthUI();
         for (int i = 0; i < playerHealth; i++)
         {
             GameObject heart = Instantiate(heartPrefab, canvas.transform);
@@ -194,6 +190,17 @@ public class GameManager : MonoBehaviour
 
             RectTransform rect = heart.GetComponent<RectTransform>();
             rect.anchoredPosition = new Vector2(330 - (rect.sizeDelta.x /2 * i), 200);
+        }
+    }
+
+    void DeleteHealthUI()
+    {
+        foreach (Transform child in canvas.transform)
+        {
+            if (child.gameObject.CompareTag("HeartUI"))
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 
