@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     public Toggle[] toggles;
 
+    public float maxSpeed;
     public float moveSpeed;
     public float gravity;
     public float jumpForce;
@@ -30,11 +31,14 @@ public class GameManager : MonoBehaviour
     private float backgroundHeight;
     public bool gameOver = false;
 
+    public float gameSpeedIncrese = 0.001f;
+    public bool speedIncreaseOn = false;
+
     // Start is called before the first frame update
     void Start()
     {
         platformGenerator.platformSpeed = moveSpeed;
-        player.defaultDownSpeed = moveSpeed;
+//        player.defaultDownSpeed = moveSpeed;
         player.jumpForce = jumpForce;
         player.gravity = gravity;
         InitializeToggles();
@@ -53,7 +57,11 @@ public class GameManager : MonoBehaviour
             platformGenerator.scrollDown(2f);
 
         }
-        
+        if (moveSpeed < maxSpeed && speedIncreaseOn)
+        {
+            moveSpeed += gameSpeedIncrese;
+        }
+
         //backgroudn scroll
         background1.transform.position += Vector3.down * moveSpeed * Time.deltaTime;
         background2.transform.position += Vector3.down * moveSpeed * Time.deltaTime;
@@ -104,7 +112,7 @@ public class GameManager : MonoBehaviour
         if (changedToggle.name == "ScreenShakeToggle")
         {
             shakeBehavior.shakeOn = changedToggle.isOn;
-            missileSpawner.GetComponent<MissleSpawnScript>().missiles = changedToggle.isOn;
+            missileSpawner.GetComponent<MissleSpawnScript>().missiles = changedToggle.isOn;         
             if(changedToggle.isOn){
                 scoreMultiplier+=0.4f;
             }else{
@@ -117,22 +125,22 @@ public class GameManager : MonoBehaviour
         }
         if(changedToggle.name == "DustToggle")
         {
+            speedIncreaseOn = changedToggle.isOn;
             player.dustOn = changedToggle.isOn;
             if(changedToggle.isOn){
-                player.GetComponent<CharacterScript>().jumpForce=800;
-                player.GetComponent<Rigidbody2D>().gravityScale=4;
+ //                player.GetComponent<CharacterScript>().jumpForce=800;
+ //                player.GetComponent<Rigidbody2D>().gravityScale=4;
                 scoreMultiplier+=0.3f;
-                moveSpeed = moveSpeed * 1.5f;
             }
             else{
-                player.GetComponent<CharacterScript>().jumpForce=400;
-                player.GetComponent<Rigidbody2D>().gravityScale=1;
+ //               player.GetComponent<CharacterScript>().jumpForce=400;
+ //               player.GetComponent<Rigidbody2D>().gravityScale=1;
                 scoreMultiplier-=0.3f;
-                moveSpeed = moveSpeed / 1.5f;
             }   
         }
         if (changedToggle.name == "Sounds") {
             player.soundsOn = changedToggle.isOn;
+            missileSpawner.GetComponent<MissleSpawnScript>().soundOn = changedToggle.isOn;
         }
     }
 
