@@ -85,9 +85,9 @@ public class CharacterScript : MonoBehaviour
     void Update()
     {
         
-        if(transform.position.y < -cameraHeight / 2)
+        if(transform.position.y < (-cameraHeight / 2) - 20)
         {
-            endGame();
+            EndGame();
         }
 
         if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
@@ -152,11 +152,9 @@ public class CharacterScript : MonoBehaviour
     }
 
     // reset position for testing, will create gameove scences
-    private void endGame()
+    private void EndGame()
     {
-        transform.position = new Vector2(0,cameraHeight/2 - 2f);
-        gameController.GetComponent<GameManager>().score=0;
-        gameController.GetComponent<GameManager>().scoreText.text="Score: 0";
+        gameController.GetComponent<GameManager>().GameOver();
     }
 
 
