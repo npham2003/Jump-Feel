@@ -43,7 +43,7 @@ public class CharacterScript : MonoBehaviour
     public bool landed = false;
     public bool blinkOn = false;
 
-
+    public GameObject gameController;
     public GameObject particles;
 
     public SpriteRenderer sprite;
@@ -140,6 +140,7 @@ public class CharacterScript : MonoBehaviour
     private void endGame()
     {
         transform.position = new Vector2(0,cameraHeight/2 - 2f);
+        gameController.GetComponent<GameManager>().score=0;
     }
 
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,8 +23,12 @@ public class GameManager : MonoBehaviour
     public float moveSpeed;
     public float gravity;
     public float jumpForce;
+    public TMP_Text scoreText;
+    public int score=0;
 
+    public float scoreMultiplier = 1;
     private float backgroundHeight;
+    public bool gameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +41,7 @@ public class GameManager : MonoBehaviour
 
         backgroundHeight = background1.GetComponent<SpriteRenderer>().bounds.size.y;
         ResetBackground();
+        StartCoroutine(Score());
     }
 
     // Update is called once per frame
@@ -47,7 +53,7 @@ public class GameManager : MonoBehaviour
             platformGenerator.scrollDown(2f);
 
         }
-
+        
         //backgroudn scroll
         background1.transform.position += Vector3.down * moveSpeed * Time.deltaTime;
         background2.transform.position += Vector3.down * moveSpeed * Time.deltaTime;
@@ -89,11 +95,21 @@ public class GameManager : MonoBehaviour
             Debug.Log("Toggle Trail");
             player.GetComponent<MyTrailRenderer>().trailing = changedToggle.isOn;
             player.GetComponent<CharacterScript>().ChangeSpeed(changedToggle.isOn);
+            if(changedToggle.isOn){
+                scoreMultiplier+=0.2f;
+            }else{
+                scoreMultiplier-=0.2f;
+            }
         }
         if (changedToggle.name == "ScreenShakeToggle")
         {
             shakeBehavior.shakeOn = changedToggle.isOn;
             missileSpawner.GetComponent<MissleSpawnScript>().missiles = changedToggle.isOn;
+            if(changedToggle.isOn){
+                scoreMultiplier+=0.4f;
+            }else{
+                scoreMultiplier-=0.4f;
+            }
         }
         if (changedToggle.name == "BlinkToggle")
         {
@@ -105,9 +121,11 @@ public class GameManager : MonoBehaviour
             if(changedToggle.isOn){
                 player.GetComponent<CharacterScript>().jumpForce=800;
                 player.GetComponent<Rigidbody2D>().gravityScale=4;
+                scoreMultiplier+=0.3f;
             }else{
                 player.GetComponent<CharacterScript>().jumpForce=200;
                 player.GetComponent<Rigidbody2D>().gravityScale=1;
+                scoreMultiplier-=0.3f;
             }
         }
     }
@@ -127,6 +145,17 @@ public class GameManager : MonoBehaviour
     {
         background1.transform.position = new Vector3(0,0,5);
         background2.transform.position = new Vector3(0,backgroundHeight,5);
+    }
+
+    private IEnumerator Score(){
+        for(; ;){
+            
+            yield return new WaitForSeconds(1);
+            if(!gameOver){
+                score+=((int)(100*scoreMultiplier));
+                scoreText.text="Score: "+score;
+            }
+        }
     }
 
 }
