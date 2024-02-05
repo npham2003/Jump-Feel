@@ -141,6 +141,7 @@ public class CharacterScript : MonoBehaviour
     {
         transform.position = new Vector2(0,cameraHeight/2 - 2f);
         gameController.GetComponent<GameManager>().score=0;
+        gameController.GetComponent<GameManager>().scoreText.text="Score: 0";
     }
 
 

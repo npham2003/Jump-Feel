@@ -1428,6 +1428,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8754707840450282459, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 331276622}
+    - target: {fileID: 8754707840450282459, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
       propertyPath: groundCheckDistance
       value: 0.2
       objectReference: {fileID: 0}
