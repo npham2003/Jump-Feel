@@ -51,12 +51,15 @@ public class CharacterScript : MonoBehaviour
 
     public AudioSource jumpAudioSource;
     public AudioSource landingAudioSource;
+    public AudioSource hitAudioSource;
 
     private Color startedColor;
 
     private UtilityScript utilityScript;
     private float cameraHeight;
     private float cameraWidth;
+
+    bool isCoroutineReady = true;
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +77,8 @@ public class CharacterScript : MonoBehaviour
 
         myRigidbody.gravityScale = gravity;
         startedColor = sprite.color;
+        
+        StartCoroutine(Blink());
     }
 
     // Update is called once per frame
@@ -136,8 +141,13 @@ public class CharacterScript : MonoBehaviour
 
         if (hitByMissle)
         {
-            StartCoroutine(Blink());
-            xspeed = 0;
+           if(isCoroutineReady)
+            {
+                isCoroutineReady = false;
+                StartCoroutine(Blink());
+                xspeed = 0;
+            }
+            
         }
     }
 
@@ -194,7 +204,7 @@ public class CharacterScript : MonoBehaviour
 
     IEnumerator Blink()
     {
-        
+        if (soundsOn) hitAudioSource.Play();
         if (blinkOn)
         {
             var whenAreWeDone = Time.time + blinkFor;
@@ -208,9 +218,8 @@ public class CharacterScript : MonoBehaviour
             }
             sprite.color = startedColor;
         }
-
         hitByMissle = false;
-
+        isCoroutineReady = true;
 
     }
 

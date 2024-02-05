@@ -15,9 +15,12 @@ public class MissleSpawnScript : MonoBehaviour
     private float cameraWidth;
     private float timer = 0;
 
+    public AudioSource fireAudioSource;
+
     private UtilityScript utilityScript;
 
     public bool missiles = false;
+    public bool soundOn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -71,5 +74,6 @@ public class MissleSpawnScript : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         rb.simulated = true;
+        if (soundOn) fireAudioSource.Play();
     }
 }
