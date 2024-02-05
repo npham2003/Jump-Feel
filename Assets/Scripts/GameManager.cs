@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -37,6 +38,11 @@ public class GameManager : MonoBehaviour
     public float gameSpeedIncrese = 0.001f;
     public bool speedIncreaseOn = false;
 
+    public TMP_Text gameOverScoreText;
+
+    public TMP_Text highScoreText;
+
+    public GameObject gameOverPanel;
 
 
     // Start is called before the first frame update
@@ -81,6 +87,13 @@ public class GameManager : MonoBehaviour
             background2.transform.position += Vector3.up * 2 * backgroundHeight;
         }
 
+        if(gameOver){
+            if(Input.GetKeyDown(KeyCode.Space)){
+                string currentSceneName = SceneManager.GetActiveScene().name;
+                SceneManager.LoadScene(currentSceneName);
+            }
+        }
+
     }
 
     void InitializeToggles()
@@ -90,6 +103,16 @@ public class GameManager : MonoBehaviour
             toggle.onValueChanged.AddListener(delegate {OnToggleValueChanged(toggle);});
         }
         
+    }
+
+    public void GameOver(){
+        gameOver=true;
+        gameOverScoreText.text=score.ToString();
+        gameOverPanel.SetActive(true);
+        if(score>HighScoreKeeper.keeper.highScore){
+            HighScoreKeeper.keeper.highScore = score;
+        }
+        highScoreText.text = HighScoreKeeper.keeper.highScore.ToString();
     }
 
     public void OnToggleValueChanged(Toggle changedToggle)
@@ -210,7 +233,8 @@ public class GameManager : MonoBehaviour
         UpdateHealthUI();
         if(playerHealth <= 0)
         {
-            //enter the end scene
+            Destroy(player);
+            GameOver();
         }
     }
 

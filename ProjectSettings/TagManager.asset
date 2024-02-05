@@ -8,6 +8,7 @@ TagManager:
   - MissleTrigger
   - GameManager
   - HeartUI
+  - HighScoreText
   layers:
   - Default
   - TransparentFX
