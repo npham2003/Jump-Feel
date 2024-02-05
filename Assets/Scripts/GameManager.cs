@@ -122,11 +122,14 @@ public class GameManager : MonoBehaviour
                 player.GetComponent<CharacterScript>().jumpForce=800;
                 player.GetComponent<Rigidbody2D>().gravityScale=4;
                 scoreMultiplier+=0.3f;
-            }else{
+                moveSpeed = moveSpeed * 1.5f;
+            }
+            else{
                 player.GetComponent<CharacterScript>().jumpForce=400;
                 player.GetComponent<Rigidbody2D>().gravityScale=1;
                 scoreMultiplier-=0.3f;
-            }
+                moveSpeed = moveSpeed / 1.5f;
+            }   
         }
     }
 
