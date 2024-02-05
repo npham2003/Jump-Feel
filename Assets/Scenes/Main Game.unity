@@ -1404,6 +1404,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2032906459}
     - target: {fileID: 8754707840450282459, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
+      propertyPath: friction
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754707840450282459, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
       propertyPath: renderer
       value: 
       objectReference: {fileID: 2032906459}
