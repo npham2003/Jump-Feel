@@ -131,6 +131,9 @@ public class GameManager : MonoBehaviour
                 moveSpeed = moveSpeed / 1.5f;
             }   
         }
+        if (changedToggle.name == "Sounds") {
+            player.soundsOn = changedToggle.isOn;
+        }
     }
 
     private void setAllEffects(bool isEffectOn)
