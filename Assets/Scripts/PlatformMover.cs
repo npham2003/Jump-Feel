@@ -10,14 +10,18 @@ public class PlatformMover : MonoBehaviour
     private Rigidbody2D rb;
     private float moveTimer;
     private bool shouldMove = false;
+    GameManager gameManager;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
     }
 
     void FixedUpdate()
     {
+        moveSpeed = gameManager.moveSpeed;
         moveTimer -= Time.fixedDeltaTime;
         Vector2 newPosition = rb.position + Vector2.down * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(newPosition);
