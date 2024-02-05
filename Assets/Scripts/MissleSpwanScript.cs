@@ -17,6 +17,8 @@ public class MissleSpawnScript : MonoBehaviour
 
     private UtilityScript utilityScript;
 
+    public bool missiles = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,8 +45,10 @@ public class MissleSpawnScript : MonoBehaviour
         }
         else
         {
-            SpawnMissle();
-            timer = 0;
+            if(missiles){
+                SpawnMissle();
+                timer = 0;
+            }
         }
         if(this.transform.position.y < -cameraHeight)
         {

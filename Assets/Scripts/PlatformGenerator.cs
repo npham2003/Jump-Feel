@@ -16,7 +16,7 @@ public class PlatformGenerator : MonoBehaviour
     public float verticalOffset = 20.0f; //Minimum distance between player and the highest platform
     private float nextSpawnY = -2f;
     public float horizontalLimit = 3f;
-    public float platformSpacing = 10f; // vertical distance between different platform
+    public float platformSpacing = 8f; // vertical distance between different platform
 
     public float platformSpeed;
 
