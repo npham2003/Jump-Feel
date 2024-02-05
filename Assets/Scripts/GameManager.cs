@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
                 player.GetComponent<Rigidbody2D>().gravityScale=4;
                 scoreMultiplier+=0.3f;
             }else{
-                player.GetComponent<CharacterScript>().jumpForce=200;
+                player.GetComponent<CharacterScript>().jumpForce=400;
                 player.GetComponent<Rigidbody2D>().gravityScale=1;
                 scoreMultiplier-=0.3f;
             }
