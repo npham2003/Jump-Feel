@@ -87,7 +87,12 @@ public class GameManager : MonoBehaviour
             {
                 moveSpeed += gameSpeedIncrese;
             }
+            if(Input.GetKeyDown(KeyCode.Space)){
+                toggles[1].isOn=!toggles[1].isOn;
+            }
         }
+
+        
 
         //backgroudn scroll
         background1.transform.position += Vector3.down * moveSpeed * Time.deltaTime;
