@@ -57,14 +57,17 @@ public class MissleScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        CharacterScript characterScript = player.GetComponent<CharacterScript>();
-        if (other.gameObject.CompareTag("MissleTrigger") && !characterScript.hitByMissle)
-        {
-            characterScript.hitByMissle = true;
-            GameObject.Find("GameManager").GetComponent<GameManager>().playerHit();
-            shakeBehavior.triggerShake();
-            Destroy(gameObject);
-            
+        if(player!=null){
+            CharacterScript characterScript = player.GetComponent<CharacterScript>();
+        
+            if (other.gameObject.CompareTag("MissleTrigger") && !characterScript.hitByMissle)
+            {
+                characterScript.hitByMissle = true;
+                GameObject.Find("GameManager").GetComponent<GameManager>().playerHit();
+                shakeBehavior.triggerShake();
+                Destroy(gameObject);
+                
+            }
         }
     }
 }
