@@ -154,7 +154,8 @@ public class CharacterScript : MonoBehaviour
     // reset position for testing, will create gameove scences
     private void EndGame()
     {
-        gameController.GetComponent<GameManager>().GameOver();
+        gameController.GetComponent<GameManager>().gameOver=true;
+        Destroy(this.gameObject);
     }
 
 

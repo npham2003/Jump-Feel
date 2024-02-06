@@ -16,7 +16,7 @@ public class MissleSpawnScript : MonoBehaviour
     private float timer = 0;
 
     public AudioSource fireAudioSource;
-
+    public GameObject gameManager;
     private UtilityScript utilityScript;
 
     public bool missiles = false;
@@ -48,7 +48,7 @@ public class MissleSpawnScript : MonoBehaviour
         }
         else
         {
-            if(missiles){
+            if(missiles&&!gameManager.GetComponent<GameManager>().gameOver){
                 SpawnMissle();
                 timer = 0;
             }

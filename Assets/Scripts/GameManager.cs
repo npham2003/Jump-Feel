@@ -45,6 +45,13 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
 
     public TMP_Text highScore;
+    public AudioSource falling;
+    public AudioSource landing;
+    public bool gameOverSounds=false;
+
+    public bool fallingPlayed=false;
+
+    public bool landingPlayed=false;
 
 
 
@@ -94,6 +101,28 @@ public class GameManager : MonoBehaviour
         }
 
         if(gameOver){
+            print(falling.isPlaying);
+            if(gameOverSounds){
+                if(!falling.isPlaying&&!fallingPlayed){
+                    falling.Play();
+                    fallingPlayed=true;
+                }
+
+                if(!landingPlayed&&!falling.isPlaying&&fallingPlayed){
+                    
+                        print("hi");
+                        landing.Play();
+                        landingPlayed=true;
+                        GameOver();
+                    
+                }
+            }else{
+                if(!fallingPlayed){
+                    fallingPlayed=true;
+                    GameOver();
+                }
+            }
+            
             if(Input.GetKeyDown(KeyCode.Space)){
                 string currentSceneName = SceneManager.GetActiveScene().name;
                 SceneManager.LoadScene(currentSceneName);
@@ -111,8 +140,10 @@ public class GameManager : MonoBehaviour
         
     }
 
+
     public void GameOver(){
-        gameOver=true;
+        print("hi");
+        
         gameOverScoreText.text=score.ToString();
         gameOverPanel.SetActive(true);
         if(score>HighScoreKeeper.keeper.highScore){
@@ -125,6 +156,11 @@ public class GameManager : MonoBehaviour
             toggles[i].interactable = false;
         }
         highScoreText.text = HighScoreKeeper.keeper.highScore.ToString();
+    }
+
+    public IEnumerator WaitForSound(AudioSource audio){
+        yield return new WaitUntil(() => audio.isPlaying == false);
+        
     }
 
     public void OnToggleValueChanged(Toggle changedToggle)
@@ -184,6 +220,7 @@ public class GameManager : MonoBehaviour
         if (changedToggle.name == "Sounds") {
             player.soundsOn = changedToggle.isOn;
             missileSpawner.GetComponent<MissleSpawnScript>().soundOn = changedToggle.isOn;
+            gameOverSounds=changedToggle.isOn;
         }
     }
 
@@ -247,7 +284,7 @@ public class GameManager : MonoBehaviour
         {
             player.GetComponent<MyTrailRenderer>().DestroyClones();
             Destroy(player.gameObject);
-            GameOver();
+            gameOver=true;
         }
     }
 
