@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         }
 
         if(gameOver){
-            print(falling.isPlaying);
+           
             if(gameOverSounds){
                 if(!falling.isPlaying&&!fallingPlayed){
                     falling.Play();
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
 
                 if(!landingPlayed&&!falling.isPlaying&&fallingPlayed){
                     
-                        print("hi");
+                        
                         landing.Play();
                         landingPlayed=true;
                         GameOver();
@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
 
 
     public void GameOver(){
-        print("hi");
+
         
         gameOverScoreText.text=score.ToString();
         gameOverPanel.SetActive(true);

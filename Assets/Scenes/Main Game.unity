@@ -1118,7 +1118,8 @@ MonoBehaviour:
   falling: {fileID: 331276627}
   landing: {fileID: 331276626}
   gameOverSounds: 0
-  soundsPlayed: 0
+  fallingPlayed: 0
+  landingPlayed: 0
 --- !u!4 &331276624
 Transform:
   m_ObjectHideFlags: 0
