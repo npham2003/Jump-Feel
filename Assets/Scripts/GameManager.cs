@@ -70,6 +70,12 @@ public class GameManager : MonoBehaviour
         backgroundHeight = background1.GetComponent<SpriteRenderer>().bounds.size.y;
         ResetBackground();
         StartCoroutine(Score());
+        while(HighScoreKeeper.keeper.toggles.Count<toggles.Length){
+            HighScoreKeeper.keeper.toggles.Add(false);
+        }
+        for(int i=0;i<toggles.Length;i++){
+            toggles[i].isOn=HighScoreKeeper.keeper.toggles[i];
+        }
         //UpdateHealthUI();
     }
 
@@ -161,6 +167,7 @@ public class GameManager : MonoBehaviour
         }
         for (int i =0;i<toggles.Length;i++){
             toggles[i].interactable = false;
+            HighScoreKeeper.keeper.toggles[i]=toggles[i].isOn;
         }
         highScoreText.text = HighScoreKeeper.keeper.highScore.ToString();
     }

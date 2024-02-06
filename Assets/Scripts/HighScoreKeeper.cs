@@ -7,6 +7,8 @@ public class HighScoreKeeper : MonoBehaviour
     public static HighScoreKeeper keeper;
     public int highScore=0;
 
+    public List<bool> toggles;
+
     private void Awake()
     {
         
