@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     public TMP_Text highScoreText;
 
+    public TMP_Text multiplierText;
+
     public GameObject gameOverPanel;
 
     public TMP_Text highScore;
@@ -165,63 +167,66 @@ public class GameManager : MonoBehaviour
 
     public void OnToggleValueChanged(Toggle changedToggle)
     {
-        if(changedToggle.name == "SelectAllToggle")
-        {
-            setAllEffects(changedToggle.isOn);
-        }
+        if(player!=null){
+            if(changedToggle.name == "SelectAllToggle")
+            {
+                setAllEffects(changedToggle.isOn);
+            }
 
-        if(changedToggle.name == "DeSelectAllToggle")
-        {
-            setAllEffects(false);
-        }
+            if(changedToggle.name == "DeSelectAllToggle")
+            {
+                setAllEffects(false);
+            }
 
-        if (changedToggle.name == "TrailToggle")
-        {
-            Debug.Log("Toggle Trail");
-            player.GetComponent<MyTrailRenderer>().trailing = changedToggle.isOn;
-            player.GetComponent<CharacterScript>().ChangeSpeed(changedToggle.isOn);
-            if(changedToggle.isOn){
-                scoreMultiplier+=0.3f;
-            }else{
-                scoreMultiplier-=0.3f;
+            if (changedToggle.name == "TrailToggle")
+            {
+                Debug.Log("Toggle Trail");
+                player.GetComponent<MyTrailRenderer>().trailing = changedToggle.isOn;
+                player.GetComponent<CharacterScript>().ChangeSpeed(changedToggle.isOn);
+                if(changedToggle.isOn){
+                    scoreMultiplier+=0.3f;
+                }else{
+                    scoreMultiplier-=0.3f;
+                }
+            }
+            if (changedToggle.name == "ScreenShakeToggle")
+            {
+                shakeBehavior.shakeOn = changedToggle.isOn;
+                missileSpawner.GetComponent<MissleSpawnScript>().missiles = changedToggle.isOn;         
+                if(changedToggle.isOn){
+                    UpdateHealthUI();
+                    scoreMultiplier+=0.4f;
+                }else{
+                    DeleteHealthUI();
+                    scoreMultiplier-=0.4f;
+                }
+            }
+            if (changedToggle.name == "BlinkToggle")
+            {
+                player.blinkOn = changedToggle.isOn;
+            }
+            if(changedToggle.name == "DustToggle")
+            {
+                speedIncreaseOn = changedToggle.isOn;
+                player.dustOn = changedToggle.isOn;
+                if(changedToggle.isOn){
+    //                player.GetComponent<CharacterScript>().jumpForce=800;
+    //                player.GetComponent<Rigidbody2D>().gravityScale=4;
+                    scoreMultiplier+=0.3f;
+                }
+                else{
+    //               player.GetComponent<CharacterScript>().jumpForce=400;
+    //               player.GetComponent<Rigidbody2D>().gravityScale=1;
+                    scoreMultiplier-=0.3f;
+                }   
+            }
+            if (changedToggle.name == "Sounds") {
+                player.soundsOn = changedToggle.isOn;
+                missileSpawner.GetComponent<MissleSpawnScript>().soundOn = changedToggle.isOn;
+                gameOverSounds=changedToggle.isOn;
             }
         }
-        if (changedToggle.name == "ScreenShakeToggle")
-        {
-            shakeBehavior.shakeOn = changedToggle.isOn;
-            missileSpawner.GetComponent<MissleSpawnScript>().missiles = changedToggle.isOn;         
-            if(changedToggle.isOn){
-                UpdateHealthUI();
-                scoreMultiplier+=0.4f;
-            }else{
-                DeleteHealthUI();
-                scoreMultiplier-=0.4f;
-            }
-        }
-        if (changedToggle.name == "BlinkToggle")
-        {
-            player.blinkOn = changedToggle.isOn;
-        }
-        if(changedToggle.name == "DustToggle")
-        {
-            speedIncreaseOn = changedToggle.isOn;
-            player.dustOn = changedToggle.isOn;
-            if(changedToggle.isOn){
- //                player.GetComponent<CharacterScript>().jumpForce=800;
- //                player.GetComponent<Rigidbody2D>().gravityScale=4;
-                scoreMultiplier+=0.3f;
-            }
-            else{
- //               player.GetComponent<CharacterScript>().jumpForce=400;
- //               player.GetComponent<Rigidbody2D>().gravityScale=1;
-                scoreMultiplier-=0.3f;
-            }   
-        }
-        if (changedToggle.name == "Sounds") {
-            player.soundsOn = changedToggle.isOn;
-            missileSpawner.GetComponent<MissleSpawnScript>().soundOn = changedToggle.isOn;
-            gameOverSounds=changedToggle.isOn;
-        }
+        multiplierText.text = "Multiplier: "+ string.Format("{0:0.0}", scoreMultiplier) + "x";
     }
 
     private void setAllEffects(bool isEffectOn)
