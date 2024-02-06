@@ -2146,7 +2146,7 @@ PrefabInstance:
       objectReference: {fileID: 2032906459}
     - target: {fileID: 8754707840450282459, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
       propertyPath: friction
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8754707840450282459, guid: 8c2116a794ec59843a9ffdce95308b99, type: 3}
       propertyPath: renderer
@@ -4762,8 +4762,8 @@ RectTransform:
   - {fileID: 834815616}
   - {fileID: 581906309}
   - {fileID: 110479932}
-  - {fileID: 133398243}
   - {fileID: 1317695634}
+  - {fileID: 133398243}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

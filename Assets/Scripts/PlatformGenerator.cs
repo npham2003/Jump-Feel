@@ -4,7 +4,7 @@ using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
-using UnityEditor.SearchService;
+
 using Unity.VisualScripting;
 
 public class PlatformGenerator : MonoBehaviour
