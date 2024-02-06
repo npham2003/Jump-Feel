@@ -42,6 +42,14 @@ public class MyTrailRenderer : MonoBehaviour
         }
         
     }
+
+    public void DestroyClones(){
+        for (int i = 0; i < clones.Count; i++){
+            Destroy(clones[i].gameObject);
+            clones.RemoveAt(i);
+            i--;
+        }
+    }
  
     IEnumerator trail()
     {

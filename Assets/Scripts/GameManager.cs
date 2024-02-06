@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
 
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,15 +65,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player.transform.position.y >= 1.5f)
-        {   
-            //player.transform.Translate(0,-2f,0);
-            platformGenerator.scrollDown(2f);
+        if(!gameOver){
+            if(player.transform.position.y >= 1.5f)
+            {   
+                //player.transform.Translate(0,-2f,0);
+                platformGenerator.scrollDown(2f);
 
-        }
-        if (moveSpeed < maxSpeed && speedIncreaseOn)
-        {
-            moveSpeed += gameSpeedIncrese;
+            }
+            if (moveSpeed < maxSpeed && speedIncreaseOn)
+            {
+                moveSpeed += gameSpeedIncrese;
+            }
         }
 
         //backgroudn scroll
@@ -111,6 +115,9 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         if(score>HighScoreKeeper.keeper.highScore){
             HighScoreKeeper.keeper.highScore = score;
+        }
+        for (int i =0;i<toggles.Length;i++){
+            toggles[i].interactable = false;
         }
         highScoreText.text = HighScoreKeeper.keeper.highScore.ToString();
     }
@@ -233,7 +240,8 @@ public class GameManager : MonoBehaviour
         UpdateHealthUI();
         if(playerHealth <= 0)
         {
-            Destroy(player);
+            player.GetComponent<MyTrailRenderer>().DestroyClones();
+            Destroy(player.gameObject);
             GameOver();
         }
     }
