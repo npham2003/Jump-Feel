@@ -33,4 +33,6 @@ public class AnimateShade : MonoBehaviour
         }
         text.color = new Color(shade/255f, shade/255f, shade/255f, 1f);
     }
+
+    
 }

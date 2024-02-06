@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject gameOverPanel;
 
+    public TMP_Text highScore;
+
 
 
 
@@ -115,6 +117,9 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         if(score>HighScoreKeeper.keeper.highScore){
             HighScoreKeeper.keeper.highScore = score;
+            highScore.text = "New High Score!";
+            highScore.color = Color.red;
+            highScore.GetComponent<RainbowText>().Animate();
         }
         for (int i =0;i<toggles.Length;i++){
             toggles[i].interactable = false;
