@@ -9,7 +9,15 @@ public class HighScoreKeeper : MonoBehaviour
 
     private void Awake()
     {
-        keeper = this;
+        
+        if (keeper == null) {
+            keeper = this;
+            
+        } else {
+            Destroy(gameObject);
+            print("oops");
+        }
         DontDestroyOnLoad(gameObject);
+        
     }
 }
