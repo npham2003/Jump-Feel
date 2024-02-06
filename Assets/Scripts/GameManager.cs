@@ -145,9 +145,9 @@ public class GameManager : MonoBehaviour
             player.GetComponent<MyTrailRenderer>().trailing = changedToggle.isOn;
             player.GetComponent<CharacterScript>().ChangeSpeed(changedToggle.isOn);
             if(changedToggle.isOn){
-                scoreMultiplier+=0.2f;
+                scoreMultiplier+=0.3f;
             }else{
-                scoreMultiplier-=0.2f;
+                scoreMultiplier-=0.3f;
             }
         }
         if (changedToggle.name == "ScreenShakeToggle")
