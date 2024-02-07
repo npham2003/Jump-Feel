@@ -85,7 +85,7 @@ public class CharacterScript : MonoBehaviour
     void Update()
     {
         
-        if(transform.position.y < (-cameraHeight / 2) - 20)
+        if(transform.position.y < (-cameraHeight / 2) - 2)
         {
             EndGame();
         }
@@ -136,6 +136,7 @@ public class CharacterScript : MonoBehaviour
         {
             if (soundsOn) jumpAudioSource.Play();
             myRigidbody.AddForce(new Vector2(myRigidbody.velocity.x, jumpForce));
+            
             landed = false;
         }
 
